@@ -43,7 +43,7 @@ function BarbershopList() {
             <ul>
                 {barbershops.map((barbershop) => (
                     <li key={barbershop.id} className='py-1'>
-                        {barbershop.name} <br/> (ID: {barbershop.id})
+                        {barbershop.name} <br /> (ID: {barbershop.id})
                     </li>
                 ))}
             </ul>
@@ -54,6 +54,9 @@ function BarbershopList() {
 
 function BarbershopForm() {
     const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
+    const [description, setDescription] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<boolean>(false);
 
@@ -77,13 +80,40 @@ function BarbershopForm() {
         <div>
             <h1 className="py-3 text-lg font-semibold text-center">Cadastrar Barbearia</h1>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="py-2">
                     <label htmlFor="name">Nome:</label>
                     <input
                         id="name"
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                    />
+                </div>
+                <div className="py-2">
+                    <label htmlFor="address">Address:</label>
+                    <input
+                        id="address"
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                    />
+                </div>
+                <div className="py-2">
+                    <label htmlFor="phone">Phone:</label>
+                    <input
+                        id="phone"
+                        type="number"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                    />
+                </div>
+                <div className="py-2">
+                    <label htmlFor="description">Description:</label>
+                    <input
+                        id="description"
+                        type="text"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
                 <button type="submit">Cadastrar</button>
