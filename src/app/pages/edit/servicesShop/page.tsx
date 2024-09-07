@@ -14,7 +14,7 @@ interface BarberServices {
 export default function Services() {
 
     const [services, setServices] = useState<BarberServices[]>([]);
-    const [loading, setLoading] = useState<Boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<String | null>(null);
 
     useEffect(() => {
