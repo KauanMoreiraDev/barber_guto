@@ -50,7 +50,7 @@ export default function Hours() {
                 <Link href={"/"}>Voltar</Link>
 
                 {slots.map((slots) => (
-                    <div>
+                    <div key={slots.barbershopId}>
                         <div className="py-2">
                             {slots.id}
                         </div>
