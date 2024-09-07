@@ -15,7 +15,7 @@ export default function Services() {
 
     const [services, setServices] = useState<BarberServices[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<String | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchBarberServices = async () => {
