@@ -1,8 +1,46 @@
 'use client'
 
 import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+interface BarberSlots {
+    id: number;
+    barbershopId: number;
+    timeId: number;
+    date: number;
+}
 
 export default function Hours() {
+
+    const [slots, setslots] = useState<BarberSlots[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchBarberSlots = async () => {
+            try {
+                const response = await axios.get('http://localhost:8800/slots?barbershopId=c5aec86a-71a4-453f-8185-c86a1c8126bb&date=2024-09-02');
+                setslots(response.data);
+            } catch (error) {
+                console.error(error);
+                setError('ocorreu um erro ao buscar pelos agendamentos.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchBarberSlots();
+    }, []);
+
+    if (loading) {
+        return <p>Carregando...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
     return (
         <div className="w-screen min-h-screen bg-lime-500">
             <div className="mx-auto max-w-screen-lg bg-blue-300">
@@ -11,96 +49,23 @@ export default function Hours() {
                 <h1>Editar cadastro</h1>
                 <Link href={"/"}>Voltar</Link>
 
-                <div className="flex flex-row justify-center">
-
-                    <form action="" className="flex flex-col items-center">
-                        <div className="">Funcionamento Segunda-feira</div>
-                        <div className="flex flex-row py-2">
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="segManha" className="block text-gray-500">Horário da manhã</label>
-                                <input type="time" name="SegManha" id="segManha" required className="p-1" />
-                            </div>
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="segTarde" className="block text-gray-500">Horário da tarde</label>
-                                <input type="time" name="SegTarde" id="segTarde" required className="p-1" />
-                            </div>
+                {slots.map((slots) => (
+                    <div>
+                        <div className="py-2">
+                            {slots.id}
                         </div>
-
-                        <div className="">Funcionamento Terça-feira</div>
-                        <div className="flex flex-row py-2">
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="terManha" className="block text-gray-500">Horário da manhã</label>
-                                <input type="time" name="TerManha" id="terManha" required className="p-1" />
-                            </div>
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="terTarde" className="block text-gray-500">Horário da tarde</label>
-                                <input type="time" name="TerTarde" id="terTarde" required className="p-1" />
-                            </div>
+                        <div className="py-2">
+                            {slots.barbershopId}
                         </div>
-
-                        <div className="">Funcionamento Quarta-feira</div>
-                        <div className="flex flex-row py-2">
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="quaManha" className="block text-gray-500">Horário da manhã</label>
-                                <input type="time" name="QuaManha" id="quaManha" required className="p-1" />
-                            </div>
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="quaTarde" className="block text-gray-500">Horário da tarde</label>
-                                <input type="time" name="QuaTarde" id="quaTarde" required className="p-1" />
-                            </div>
+                        <div className="py-2">
+                            {slots.date}
                         </div>
-
-                        <div className="">Funcionamento Quinta-feira</div>
-                        <div className="flex flex-row py-2">
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="quiManha" className="block text-gray-500">Horário da manhã</label>
-                                <input type="time" name="QuiManha" id="quiManha" required className="p-1" />
-                            </div>
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="quiTarde" className="block text-gray-500">Horário da tarde</label>
-                                <input type="time" name="QuiTarde" id="quiTarde" required className="p-1" />
-                            </div>
+                        <div className="py-2">
+                            {slots.timeId}
                         </div>
+                    </div>
+                ))}
 
-                        <div className="">Funcionamento Sexta-feira</div>
-                        <div className="flex flex-row py-2">
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="sexManha" className="block text-gray-500">Horário da manhã</label>
-                                <input type="time" name="SexManha" id="sexManha" required className="p-1" />
-                            </div>
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="sexTarde" className="block text-gray-500">Horário da tarde</label>
-                                <input type="time" name="SexTarde" id="sexTarde" required className="p-1" />
-                            </div>
-                        </div>
-
-                        <div className="">Funcionamento Sábado</div>
-                        <div className="flex flex-row py-2">
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="sabManha" className="block text-gray-500">Horário da manhã</label>
-                                <input type="time" name="SabManha" id="sabManha" required className="p-1" />
-                            </div>
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="sabTarde" className="block text-gray-500">Horário da tarde</label>
-                                <input type="time" name="SabTarde" id="sabTarde" required className="p-1" />
-                            </div>
-                        </div>
-
-                        <div className="">Funcionamento Domingo</div>
-                        <div className="flex flex-row py-2">
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="domManha" className="block text-gray-500">Horário da manhã</label>
-                                <input type="time" name="DomManha" id="domManha" required className="p-1" />
-                            </div>
-                            <div className="flex flex-col mx-2">
-                                <label htmlFor="domTarde" className="block text-gray-500">Horário da tarde</label>
-                                <input type="time" name="DomTarde" id="domTarde" required className="p-1" />
-                            </div>
-                        </div>
-
-                        <input type="submit" value="Cadastrar Barbearia" />
-                    </form>
-                </div>
             </div>
         </div>
     );

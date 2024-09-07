@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Barbershop {
     id: number;
     name: string;
+    image: string;
 }
 
 function BarbershopList() {
@@ -28,6 +30,22 @@ function BarbershopList() {
         fetchBarbershops();
     }, []);
 
+    const handleDelete = async (id: number) => {
+        setLoading(true);
+        try {
+            const response = await axios.delete(`http://localhost:8800/barbershops/${id}`);
+            console.log('Resposta do servidor:', response.data);
+            setBarbershops((prevBarbershops) =>
+                prevBarbershops.filter(barbershop => barbershop.id !== id)
+            );
+        } catch (error) {
+            console.error('Erro ao excluir:', error);
+            setError('Ocorreu um erro ao excluir a barbearia.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     if (loading) {
         return <p>Carregando...</p>;
     }
@@ -42,8 +60,22 @@ function BarbershopList() {
             <h1 className="py-3 text-lg font-semibold text-center">Lista de Barbearias</h1>
             <ul>
                 {barbershops.map((barbershop) => (
-                    <li key={barbershop.id} className='py-1'>
-                        {barbershop.name} <br /> (ID: {barbershop.id})
+                    <li key={barbershop.id} className='py-4'>
+                        <div className='flex flex-col space-y-1'>
+                            <div className="flex flex-row items-start">
+                                <Image src={barbershop.image}
+                                    alt={`logo da barbearia ${barbershop.name}`}
+                                    width={70} height={70} className='w-1/6 h-1/6 bg-lime-500' />
+                                <div className='font-semibold'>
+                                    Barber Shop:
+                                    <div className='font-normal'>{barbershop.name}</div>
+                                </div>
+                                <button className='flex flex-row justify-end w-full' onClick={() => handleDelete(barbershop.id)}>
+                                    del
+                                </button>
+                            </div>
+                            (ID: {barbershop.id})
+                        </div>
                     </li>
                 ))}
             </ul>
@@ -55,8 +87,9 @@ function BarbershopList() {
 function BarbershopForm() {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
-    const [phone, setPhone] = useState('');
+    const [phones, setPhones] = useState(''); // Alterado de 'phone' para 'phones'
     const [description, setDescription] = useState('');
+    const [imageUrl, setImageUrl] = useState(''); // Adicionado campo imageUrl
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<boolean>(false);
 
@@ -66,10 +99,22 @@ function BarbershopForm() {
         setSuccess(false);
 
         try {
-            const response = await axios.post('http://localhost:8800/barbershops', { name });
+            const response = await axios.post('http://localhost:8800/barbershops', {
+                name,
+                address,
+                phones,       // Certifique-se de que o backend espera esse campo
+                description,
+                imageUrl      // Enviar o campo imageUrl, caso seja necessário
+            });
+
             console.log(response.data);
             setSuccess(true);
+            // Limpar os campos após o sucesso
             setName('');
+            setAddress('');
+            setPhones('');
+            setDescription('');
+            setImageUrl('');
         } catch (error) {
             console.error(error);
             setError('Erro ao criar barbearia.');
@@ -87,33 +132,46 @@ function BarbershopForm() {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="py-2">
-                    <label htmlFor="address">Address:</label>
+                    <label htmlFor="address">Endereço:</label>
                     <input
                         id="address"
                         type="text"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="py-2">
-                    <label htmlFor="phone">Phone:</label>
+                    <label htmlFor="phones">Telefone:</label> {/* Alterado para 'phones' */}
                     <input
-                        id="phone"
-                        type="number"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        id="phones"
+                        type="text"
+                        value={phones}
+                        onChange={(e) => setPhones(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="py-2">
-                    <label htmlFor="description">Description:</label>
+                    <label htmlFor="description">Descrição:</label>
                     <input
                         id="description"
                         type="text"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="py-2">
+                    <label htmlFor="imageUrl">URL da Imagem (opcional):</label> {/* Novo campo imageUrl */}
+                    <input
+                        id="imageUrl"
+                        type="text"
+                        value={imageUrl}
+                        onChange={(e) => setImageUrl(e.target.value)}
                     />
                 </div>
                 <button type="submit">Cadastrar</button>
