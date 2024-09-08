@@ -6,6 +6,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { ArrowLeft, Check, X } from 'lucide-react';
 
+// Definição do tipo Barbershop
 interface Barbershop {
     id: string;
     name: string;
@@ -15,11 +16,13 @@ interface Barbershop {
     imageUrl: string;
 }
 
+// Definição do tipo para as props do componente
 interface BarbershopFormProps {
     barbershop: Barbershop;
     onUpdate: () => void;
 }
 
+// Componente BarbershopForm
 const BarbershopForm: React.FC<BarbershopFormProps> = ({ barbershop, onUpdate }) => {
     const [name, setName] = useState(barbershop.name);
     const [address, setAddress] = useState(barbershop.address);
