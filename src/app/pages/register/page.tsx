@@ -14,7 +14,8 @@ interface Barbershop {
     imageUrl: string;
 }
 
-export default function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => void }) {
+// Correção: Garantindo que o tipo das propriedades esteja correto
+export default function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop; onUpdate: () => void }) {
     const [name, setName] = useState(barbershop.name);
     const [address, setAddress] = useState(barbershop.address);
     const [phones, setPhones] = useState(barbershop.phones);
@@ -82,21 +83,11 @@ export default function BarbershopForm({ barbershop, onUpdate }: { barbershop: B
                 <div className="py-2">
                     <input
                         id="phones"
-                        type="number"
+                        type="text"
                         value={phones}
                         placeholder="Telefone"
                         onChange={(e) => setPhones(e.target.value)}
                         required
-                        className="rounded-full bg-slate-200 px-4 py-1"
-                    />
-                </div>
-                <div className="py-2">
-                    <input
-                        id="phones"
-                        type="number"
-                        value={phones}
-                        placeholder="Whatsapp"
-                        onChange={(e) => setPhones(e.target.value)}
                         className="rounded-full bg-slate-200 px-4 py-1"
                     />
                 </div>
@@ -147,4 +138,4 @@ export default function BarbershopForm({ barbershop, onUpdate }: { barbershop: B
             </form>
         </div>
     );
-};
+}
