@@ -1,12 +1,10 @@
-// src/app/pages/register/page.tsx
-'use client';
+'use client'
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { ArrowLeft, Check, X } from 'lucide-react';
 
-// Definição do tipo Barbershop
 interface Barbershop {
     id: string;
     name: string;
@@ -16,14 +14,7 @@ interface Barbershop {
     imageUrl: string;
 }
 
-// Definição do tipo para as props do componente
-interface BarbershopFormProps {
-    barbershop: Barbershop;
-    onUpdate: () => void;
-}
-
-// Componente BarbershopForm
-const BarbershopForm: React.FC<BarbershopFormProps> = ({ barbershop, onUpdate }) => {
+export default function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => void }) {
     const [name, setName] = useState(barbershop.name);
     const [address, setAddress] = useState(barbershop.address);
     const [phones, setPhones] = useState(barbershop.phones);
@@ -101,6 +92,16 @@ const BarbershopForm: React.FC<BarbershopFormProps> = ({ barbershop, onUpdate })
                 </div>
                 <div className="py-2">
                     <input
+                        id="phones"
+                        type="number"
+                        value={phones}
+                        placeholder="Whatsapp"
+                        onChange={(e) => setPhones(e.target.value)}
+                        className="rounded-full bg-slate-200 px-4 py-1"
+                    />
+                </div>
+                <div className="py-2">
+                    <input
                         id="description"
                         type="text"
                         value={description}
@@ -146,6 +147,4 @@ const BarbershopForm: React.FC<BarbershopFormProps> = ({ barbershop, onUpdate })
             </form>
         </div>
     );
-}
-
-export default BarbershopForm;
+};
