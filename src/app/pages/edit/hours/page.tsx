@@ -42,8 +42,8 @@ export default function Hours() {
     }
 
     return (
-        <div className="w-screen min-h-screen bg-lime-500">
-            <div className="mx-auto max-w-screen-lg bg-blue-300">
+        <div>
+            <div>
                 <h1>Editar horario</h1>
                 <Link href={"/pages/edit/servicesShop"}>Editar serviços</Link>
                 <h1>Editar cadastro</h1>
