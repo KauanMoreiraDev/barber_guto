@@ -1,4 +1,5 @@
-'use client'
+// src/app/pages/register/page.tsx
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -14,7 +15,12 @@ interface Barbershop {
     imageUrl: string;
 }
 
-function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => void }) {
+interface BarbershopFormProps {
+    barbershop: Barbershop;
+    onUpdate: () => void;
+}
+
+const BarbershopForm: React.FC<BarbershopFormProps> = ({ barbershop, onUpdate }) => {
     const [name, setName] = useState(barbershop.name);
     const [address, setAddress] = useState(barbershop.address);
     const [phones, setPhones] = useState(barbershop.phones);
@@ -87,16 +93,6 @@ function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
                         placeholder="Telefone"
                         onChange={(e) => setPhones(e.target.value)}
                         required
-                        className="rounded-full bg-slate-200 px-4 py-1"
-                    />
-                </div>
-                <div className="py-2">
-                    <input
-                        id="phones"
-                        type="number"
-                        value={phones}
-                        placeholder="Whatsapp"
-                        onChange={(e) => setPhones(e.target.value)}
                         className="rounded-full bg-slate-200 px-4 py-1"
                     />
                 </div>
