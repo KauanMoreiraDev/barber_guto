@@ -14,8 +14,14 @@ interface Barbershop {
     imageUrl: string;
 }
 
-// Correção: Garantindo que o tipo das propriedades esteja correto
-export default function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop; onUpdate: () => void }) {
+// Defina o tipo das propriedades do componente corretamente
+interface BarbershopFormProps {
+    barbershop: Barbershop;
+    onUpdate: () => void;
+}
+
+// Certifique-se de que o tipo das propriedades está correto
+export default function BarbershopForm({ barbershop, onUpdate }: BarbershopFormProps) {
     const [name, setName] = useState(barbershop.name);
     const [address, setAddress] = useState(barbershop.address);
     const [phones, setPhones] = useState(barbershop.phones);
