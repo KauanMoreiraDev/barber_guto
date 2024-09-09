@@ -1,4 +1,3 @@
-'use client'
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -14,14 +13,14 @@ interface Barbershop {
     imageUrl: string;
 }
 
-// Defina o tipo das propriedades do componente corretamente
+// Define o tipo das propriedades do componente
 interface BarbershopFormProps {
     barbershop: Barbershop;
     onUpdate: () => void;
 }
 
-// Certifique-se de que o tipo das propriedades está correto
-export default function BarbershopForm({ barbershop, onUpdate }: BarbershopFormProps) {
+// Componente corretamente tipado e exportado
+const BarbershopForm: React.FC<BarbershopFormProps> = ({ barbershop, onUpdate }) => {
     const [name, setName] = useState(barbershop.name);
     const [address, setAddress] = useState(barbershop.address);
     const [phones, setPhones] = useState(barbershop.phones);
@@ -145,3 +144,5 @@ export default function BarbershopForm({ barbershop, onUpdate }: BarbershopFormP
         </div>
     );
 }
+
+export default BarbershopForm;
