@@ -1,10 +1,11 @@
-'use client';
+'use client'
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { ArrowLeft, Check, X } from 'lucide-react';
 
+// Tipagem da barbearia
 interface Barbershop {
     id: string;
     name: string;
@@ -14,7 +15,8 @@ interface Barbershop {
     imageUrl: string;
 }
 
-const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => void }) => {
+// Componente de Formulário da Barbearia
+const BarbershopForm = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => void }) => {
     const [name, setName] = useState(barbershop.name);
     const [address, setAddress] = useState(barbershop.address);
     const [phones, setPhones] = useState(barbershop.phones);
@@ -147,6 +149,6 @@ const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
             </form>
         </div>
     );
-}
+};
 
-export default BarbershopPage;
+export default BarbershopForm;
