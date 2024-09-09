@@ -82,7 +82,7 @@ function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
                 <div className="py-2">
                     <input
                         id="phones"
-                        type="number"
+                        type="text"
                         value={phones}
                         placeholder="Telefone"
                         onChange={(e) => setPhones(e.target.value)}
@@ -92,8 +92,8 @@ function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
                 </div>
                 <div className="py-2">
                     <input
-                        id="phones"
-                        type="number"
+                        id="whatsapp"
+                        type="text"
                         value={phones}
                         placeholder="Whatsapp"
                         onChange={(e) => setPhones(e.target.value)}
