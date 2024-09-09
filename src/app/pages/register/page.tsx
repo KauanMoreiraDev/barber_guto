@@ -14,7 +14,8 @@ interface Barbershop {
     imageUrl: string;
 }
 
-const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => any }) => {
+
+const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => void }) => {
     const [name, setName] = useState(barbershop.name);
     const [address, setAddress] = useState(barbershop.address);
     const [phones, setPhones] = useState(barbershop.phones);
@@ -44,6 +45,7 @@ const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
                 description,
                 imageUrl
             });
+
             setSuccess(true);
             onUpdate(); // Notifica que a atualização foi realizada
         } catch (error) {
