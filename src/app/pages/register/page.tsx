@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -14,7 +14,7 @@ interface Barbershop {
     imageUrl: string;
 }
 
-function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => void }) {
+const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => void }) => {
     const [name, setName] = useState(barbershop.name);
     const [address, setAddress] = useState(barbershop.address);
     const [phones, setPhones] = useState(barbershop.phones);
@@ -149,4 +149,4 @@ function BarbershopForm({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
     );
 }
 
-export default BarbershopForm;
+export default BarbershopPage;
