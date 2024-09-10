@@ -5,7 +5,6 @@ import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Trash2, Pencil } from 'lucide-react';
-import BarbershopForm from '../register/page';
 
 interface Barbershop {
     id: string;
@@ -20,7 +19,6 @@ function BarbershopList() {
     const [barbershops, setBarbershops] = useState<Barbershop[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [editingBarbershop, setEditingBarbershop] = useState<Barbershop | null>(null);
 
     const fetchBarbershops = async () => {
         try {
@@ -53,10 +51,7 @@ function BarbershopList() {
         }
     };
 
-    const handleEdit = (barbershop: Barbershop) => {
-        setEditingBarbershop(barbershop);
-    };
-
+    
     if (loading) {
         return <p>Carregando...</p>;
     }
@@ -85,7 +80,7 @@ function BarbershopList() {
                                 <button className='px-1' onClick={() => handleDelete(barbershop.id)}>
                                     <Trash2 />
                                 </button>
-                                <button className='px-1' onClick={() => handleEdit(barbershop)}>
+                                <button className='px-1' >
                                     <Pencil />
                                 </button>
                             </div>

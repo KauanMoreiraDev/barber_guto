@@ -1,19 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { ArrowLeft, Check, X } from 'lucide-react';
-
-interface Barbershop {
-    id: string;
-    name: string;
-    address: string;
-    phones: string;
-    description: string;
-    imageUrl: string;
-}
-
 
 function BarbershopForm() {
     const [name, setName] = useState('');
