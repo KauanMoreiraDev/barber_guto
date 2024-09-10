@@ -15,22 +15,14 @@ interface Barbershop {
 }
 
 
-const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUpdate: () => void }) => {
-    const [name, setName] = useState(barbershop.name);
-    const [address, setAddress] = useState(barbershop.address);
-    const [phones, setPhones] = useState(barbershop.phones);
-    const [description, setDescription] = useState(barbershop.description);
-    const [imageUrl, setImageUrl] = useState(barbershop.imageUrl);
+function BarbershopForm() {
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [phones, setPhones] = useState(''); // Alterado de 'phone' para 'phones'
+    const [description, setDescription] = useState('');
+    const [imageUrl, setImageUrl] = useState(''); // Adicionado campo imageUrl
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<boolean>(false);
-
-    useEffect(() => {
-        setName(barbershop.name);
-        setAddress(barbershop.address);
-        setPhones(barbershop.phones);
-        setDescription(barbershop.description);
-        setImageUrl(barbershop.imageUrl);
-    }, [barbershop]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -38,7 +30,7 @@ const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
         setSuccess(false);
 
         try {
-            await axios.put(`http://localhost:8800/barbershops/${barbershop.id}`, {
+            await axios.post(`http://localhost:8800/barbershops/`, {
                 name,
                 address,
                 phones,
@@ -47,7 +39,13 @@ const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
             });
 
             setSuccess(true);
-            onUpdate(); // Notifica que a atualização foi realizada
+            // Limpar os campos após o sucesso
+            setName('');
+            setAddress('');
+            setPhones('');
+            setDescription('');
+            setImageUrl('');
+
         } catch (error) {
             console.error(error);
             setError('Erro ao atualizar a barbearia.');
@@ -125,7 +123,7 @@ const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
                 </div>
                 <button
                     type="submit"
-                    className={`relative w-1/2 h-full p-2 rounded-full font-semibold transition-all duration-1000 ease-in-out 
+                    className={`relative w-1/6 h-full p-2 rounded-full font-semibold transition-all duration-1000 ease-in-out 
             ${error ? 'bg-red-500' : success ? 'bg-green-500' : 'bg-yellow-500'}`}
                 >
                     {success ? (
@@ -151,4 +149,4 @@ const BarbershopPage = ({ barbershop, onUpdate }: { barbershop: Barbershop, onUp
     );
 }
 
-export default BarbershopPage;
+export default BarbershopForm;

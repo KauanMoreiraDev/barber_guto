@@ -57,11 +57,6 @@ function BarbershopList() {
         setEditingBarbershop(barbershop);
     };
 
-    const handleUpdate = async () => {
-        setEditingBarbershop(null);
-        await fetchBarbershops(); // Recarregar a lista de barbearias após a atualização
-    };
-
     if (loading) {
         return <p>Carregando...</p>;
     }
@@ -74,38 +69,31 @@ function BarbershopList() {
         <div className="mx-auto max-w-screen-lg">
             <Link href="/"><ArrowLeft /></Link>
             <h1 className="py-3 text-lg font-semibold text-center">Lista de Barbearias</h1>
-            {editingBarbershop ? (
-                <BarbershopForm
-                    barbershop={editingBarbershop}
-                    onUpdate={handleUpdate}
-                />
-            ) : (
-                <ul>
-                    {barbershops.map((barbershop) => (
-                        <li key={barbershop.id} className='py-4'>
-                            <div className='flex flex-col space-y-1'>
-                                <div className="flex flex-row items-start">
-                                    <Image src={"/favicon.ico"}
-                                        alt={`logo da barbearia ${barbershop.name}`}
-                                        width={70} height={70} className='w-1/6 h-1/6 bg-lime-500' />
-                                    <div className='font-semibold w-1/2'>
-                                        Barber Shop:
-                                        <div className='font-normal'>{barbershop.name}</div>
-                                    </div>
-                                    <div className="flex flex-row justify-end w-full"></div>
-                                    <button className='px-1' onClick={() => handleDelete(barbershop.id)}>
-                                        <Trash2 />
-                                    </button>
-                                    <button className='px-1' onClick={() => handleEdit(barbershop)}>
-                                        <Pencil />
-                                    </button>
+            <ul>
+                {barbershops.map((barbershop) => (
+                    <li key={barbershop.id} className='py-4'>
+                        <div className='flex flex-col space-y-1'>
+                            <div className="flex flex-row items-start">
+                                <Image src={"/favicon.ico"}
+                                    alt={`logo da barbearia ${barbershop.name}`}
+                                    width={70} height={70} className='w-1/12 h-full bg-lime-500' />
+                                <div className='font-semibold w-1/2'>
+                                    Barber Shop:
+                                    <div className='font-normal'>{barbershop.name}</div>
                                 </div>
-                                (ID: {barbershop.id})
+                                <div className="flex flex-row justify-end w-full"></div>
+                                <button className='px-1' onClick={() => handleDelete(barbershop.id)}>
+                                    <Trash2 />
+                                </button>
+                                <button className='px-1' onClick={() => handleEdit(barbershop)}>
+                                    <Pencil />
+                                </button>
                             </div>
-                        </li>
-                    ))}
-                </ul>
-            )}
+                            (ID: {barbershop.id})
+                        </div>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
