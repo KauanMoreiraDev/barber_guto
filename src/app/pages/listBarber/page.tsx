@@ -51,7 +51,7 @@ function BarbershopList() {
         }
     };
 
-    
+
     if (loading) {
         return <p>Carregando...</p>;
     }
@@ -71,20 +71,27 @@ function BarbershopList() {
                             <div className="flex flex-row items-start">
                                 <Image src={"/favicon.ico"}
                                     alt={`logo da barbearia ${barbershop.name}`}
-                                    width={70} height={70} className='w-1/12 h-full bg-lime-500' />
-                                <div className='font-semibold w-1/2'>
-                                    Barber Shop:
-                                    <div className='font-normal'>{barbershop.name}</div>
+                                    width={70} height={70} className='w-[9%] h-full bg-lime-500' />
+                                <div className="flex flex-col items-start w-full">
+                                    <div className='font-semibold w-1/2 pl-2'>
+                                        Barber Shop:
+                                        <div className='font-normal pl-7'>{barbershop.name}</div>
+                                    </div>
+                                    <div className="font-semibold w-full pl-2">
+                                        Endereço:
+                                        <div className='font-normal pl-7'>{barbershop.address}</div>
+                                    </div>
                                 </div>
-                                <div className="flex flex-row justify-end w-full"></div>
+                                <div className="flex flex-row justify-end w-1/12"></div>
                                 <button className='px-1' onClick={() => handleDelete(barbershop.id)}>
                                     <Trash2 />
                                 </button>
-                                <button className='px-1' >
-                                    <Pencil />
+                                <button className='px-1'>
+                                    <Link href={`/edit/${barbershop.id}`}>
+                                        <Pencil />
+                                    </Link>
                                 </button>
                             </div>
-                            (ID: {barbershop.id})
                         </div>
                     </li>
                 ))}

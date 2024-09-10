@@ -1,18 +1,41 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ArrowLeft, Check, X } from 'lucide-react';
 
-function BarbershopForm() {
+function EditBarbershop() {
+    const router = useRouter();
+    const { id } = router.query; // Pega o 'id' da URL
+
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
-    const [phones, setPhones] = useState(''); // Alterado de 'phone' para 'phones'
+    const [phones, setPhones] = useState('');
     const [description, setDescription] = useState('');
-    const [imageUrl, setImageUrl] = useState(''); // Adicionado campo imageUrl
+    const [imageUrl, setImageUrl] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<boolean>(false);
+
+    useEffect(() => {
+        // Busca os dados da barbearia ao carregar a página
+        if (id) {
+            axios.get(`http://localhost:8800/barbershops/${id}`)
+                .then(response => {
+                    const { name, address, phones, description, imageUrl } = response.data;
+                    setName(name);
+                    setAddress(address);
+                    setPhones(phones);
+                    setDescription(description);
+                    setImageUrl(imageUrl);
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar os dados:', error);
+                    setError('Erro ao carregar os dados da barbearia.');
+                });
+        }
+    }, [id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,7 +43,7 @@ function BarbershopForm() {
         setSuccess(false);
 
         try {
-            await axios.post(`http://localhost:8800/barbershops/`, {
+            await axios.put(`http://localhost:8800/barbershops/${id}`, {
                 name,
                 address,
                 phones,
@@ -29,23 +52,18 @@ function BarbershopForm() {
             });
 
             setSuccess(true);
-            // Limpar os campos após o sucesso
-            setName('');
-            setAddress('');
-            setPhones('');
-            setDescription('');
-            setImageUrl('');
-
+            // Redireciona para a página de lista após a edição
+            router.push('/listbarber');
         } catch (error) {
             console.error(error);
-            setError('Erro ao cadastrar barbearia.');
+            setError('Erro ao atualizar a barbearia.');
         }
     };
 
     return (
         <div>
-            <Link href={'/'}><ArrowLeft /></Link>
-            <h1 className="py-3 text-lg font-semibold text-center">Cadastrar Barbearia</h1>
+            <Link href={'/listbarber'}><ArrowLeft /></Link>
+            <h1 className="py-3 text-lg font-semibold text-center">Editar Barbearia</h1>
             <form onSubmit={handleSubmit} className='flex flex-col items-center'>
                 <div className="py-2">
                     <input
@@ -82,16 +100,6 @@ function BarbershopForm() {
                 </div>
                 <div className="py-2">
                     <input
-                        id="whatsapp"
-                        type="text"
-                        value={phones}
-                        placeholder="Whatsapp"
-                        onChange={(e) => setPhones(e.target.value)}
-                        className="rounded-full bg-slate-200 px-4 py-1"
-                    />
-                </div>
-                <div className="py-2">
-                    <input
                         id="description"
                         type="text"
                         value={description}
@@ -114,24 +122,24 @@ function BarbershopForm() {
                 <button
                     type="submit"
                     className={`relative w-1/6 h-full p-2 rounded-full font-semibold transition-all duration-1000 ease-in-out 
-            ${error ? 'bg-red-500' : success ? 'bg-green-500' : 'bg-yellow-500'}`}
+                ${error ? 'bg-red-500' : success ? 'bg-green-500' : 'bg-yellow-500'}`}
                 >
                     {success ? (
                         <span className="flex items-center justify-center space-x-2">
-                            <span className={`transition-opacity duration-1000 opacity-100 scale-100`}>
+                            <span className="transition-opacity duration-1000 opacity-100 scale-100">
                                 <Check className="w-6 h-6" />
                             </span>
-                            <span>Cadastrado</span>
+                            <span>Editado</span>
                         </span>
                     ) : error ? (
                         <span className="flex items-center justify-center space-x-2">
-                            <span className={`transition-opacity duration-1000 opacity-100 scale-100`}>
+                            <span className="transition-opacity duration-1000 opacity-100 scale-100">
                                 <X className="w-6 h-6" />
                             </span>
-                            <span>Houve um erro</span>
+                            <span>Erro</span>
                         </span>
                     ) : (
-                        'Cadastrar'
+                        'Editar'
                     )}
                 </button>
             </form>
@@ -139,4 +147,4 @@ function BarbershopForm() {
     );
 }
 
-export default BarbershopForm;
+export default EditBarbershop;
