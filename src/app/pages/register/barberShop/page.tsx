@@ -20,7 +20,7 @@ function BarbershopForm() {
         setSuccess(false);
 
         try {
-            await axios.post(`http://localhost:8800/barbershops/`, {
+            await axios.post(`https://backend-barber.vercel.app/barbershops/`, {
                 name,
                 address,
                 phones,

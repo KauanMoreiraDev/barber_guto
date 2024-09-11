@@ -25,7 +25,7 @@ function BarberList() {
     // Fetch barbershops
     const fetchBarbershops = async () => {
         try {
-            const response = await axios.get('http://localhost:8800/barbershops');
+            const response = await axios.get('https://backend-barber.vercel.app/barbershops');
             setBarbershops(response.data);
         } catch (error) {
             console.error(error);
@@ -39,7 +39,7 @@ function BarberList() {
     const fetchBarbers = async (barbershopId: string) => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:8800/barber/${barbershopId}`);
+            const response = await axios.get(`https://backend-barber.vercel.app/barber/${barbershopId}`);
             setBarbers(response.data);
         } catch (error) {
             console.error(error);
@@ -63,7 +63,7 @@ function BarberList() {
     const handleDeleteBarber = async (barberId: string) => {
         setLoading(true);
         try {
-            await axios.delete(`http://localhost:8800/barber/${barberId}`);
+            await axios.delete(`https://backend-barber.vercel.app/barber/${barberId}`);
             setBarbers((prevBarbers) =>
                 prevBarbers.filter(barber => barber.barberid !== barberId)
             );

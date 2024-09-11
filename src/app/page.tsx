@@ -14,7 +14,7 @@ const Login = () => {
         e.preventDefault(); // Evita o recarregamento da página
 
         try {
-            const res = await fetch('http://localhost:8800/users/login', { // Altere a URL conforme sua API
+            const res = await fetch('https://backend-barber.vercel.app/users/login', { // Altere a URL conforme sua API
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Corrige o header
