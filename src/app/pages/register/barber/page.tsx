@@ -45,7 +45,7 @@ function BarberForm() {
     return (
         <div>
             <Link href={'/'}><ArrowLeft /></Link>
-            <h1 className="py-3 text-lg font-semibold text-center">Cadastrar Barbearia</h1>
+            <h1 className="py-3 text-lg font-semibold text-center">Cadastrar Funcionario</h1>
             <form onSubmit={handleSubmit} className='flex flex-col items-center'>
                 <div className="py-2">
                     <input
